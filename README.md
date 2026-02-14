@@ -27,10 +27,42 @@ Safe, script-first tooling to manage multiple GitHub accounts on one machine wit
 ## Prerequisites
 
 - macOS with OpenSSH
-- Bash 4+
+- Bash (macOS default Bash 3.2 is supported)
 - `git`
 - Optional: `gh` (GitHub CLI) for key upload
 - Optional: `shellcheck` for lint checks
+
+## What To Run (By Goal)
+
+1. Preview everything and make no changes:
+```bash
+scripts/setup.sh --dry-run
+```
+2. Set up or refresh SSH aliases/keys for personal + work:
+```bash
+scripts/setup.sh --apply
+```
+3. Update existing repo remotes to alias-based SSH hosts:
+```bash
+scripts/update-remotes.sh --root "$HOME/code" --map ~/.ssh/owner-map.conf --dry-run
+scripts/update-remotes.sh --root "$HOME/code" --map ~/.ssh/owner-map.conf --apply
+```
+4. Only create a backup snapshot of current SSH files:
+```bash
+scripts/backup-keys.sh --apply
+```
+5. Only create one key manually:
+```bash
+scripts/generate-key.sh --email "you@example.com" --name "id_ed25519_example" --apply
+```
+
+## What `setup.sh` Will Not Do
+
+- It does not delete local SSH keys.
+- It does not revoke/remove keys from GitHub automatically.
+- It does not change git remotes (that is `scripts/update-remotes.sh`).
+- It only generates a key when the target key filename does not already exist.
+- It writes only a managed block in `~/.ssh/config`; it does not wipe the file.
 
 ## Quick Start
 
@@ -39,6 +71,14 @@ chmod +x scripts/*.sh tests/lint.sh
 scripts/setup.sh --dry-run
 scripts/setup.sh --apply
 ```
+
+`--apply` behavior summary:
+
+- Backs up existing `~/.ssh` files first (with confirmation).
+- Reuses existing key files if present; otherwise generates new ones.
+- Adds keys to `ssh-agent`/keychain.
+- Optionally uploads public keys via `gh` after confirmation.
+- Adds/updates a managed alias block in `~/.ssh/config`.
 
 Interactive defaults:
 
