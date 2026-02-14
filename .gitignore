@@ -1,0 +1,6 @@
+# Local/private reference docs (keep folder, ignore contents)
+docs/local-only/*
+!docs/local-only/.gitkeep
+
+# Backward-compatible direct path ignore
+docs/ssh_multi_account_setup.md

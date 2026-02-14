@@ -1,0 +1,17 @@
+# ~/.gitconfig
+
+[includeIf "gitdir:~/code/personal/"]
+  path = ~/.gitconfig-personal
+
+[includeIf "gitdir:~/code/work/"]
+  path = ~/.gitconfig-work
+
+# ~/.gitconfig-personal
+[user]
+  name = Your Name
+  email = you@personal.email
+
+# ~/.gitconfig-work
+[user]
+  name = Your Work Name
+  email = you@work.email
