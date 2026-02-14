@@ -303,7 +303,9 @@ while [[ $# -gt 0 ]]; do
   shift
 done
 
-parse_account_specific_flags "${REMAINDER[@]}"
+if [[ ${#REMAINDER[@]} -gt 0 ]]; then
+  parse_account_specific_flags "${REMAINDER[@]}"
+fi
 
 IFS=',' read -r -a ACCOUNT_LIST <<< "$ACCOUNTS_CSV"
 [[ ${#ACCOUNT_LIST[@]} -gt 0 ]] || fail "No account labels provided"
