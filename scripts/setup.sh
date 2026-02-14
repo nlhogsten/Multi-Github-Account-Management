@@ -309,7 +309,7 @@ IFS=',' read -r -a ACCOUNT_LIST <<< "$ACCOUNTS_CSV"
 [[ ${#ACCOUNT_LIST[@]} -gt 0 ]] || fail "No account labels provided"
 
 for i in "${!ACCOUNT_LIST[@]}"; do
-  ACCOUNT_LIST[$i]="${ACCOUNT_LIST[$i]// /}"
+  ACCOUNT_LIST[i]="${ACCOUNT_LIST[i]// /}"
 done
 
 ensure_ssh_dir
